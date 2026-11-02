@@ -27,7 +27,8 @@ function renderProducts(){
 }
 function showProduct(code){
  const p=products.find(x=>x.code===code);if(!p)return;
- $('#modal-content').innerHTML='<img src="'+escapeHTML(p.image)+'" alt="'+escapeHTML(p.alt)+'"><div class="modal-copy"><p class="eyebrow">'+p.code+' / '+escapeHTML(p.category)+'</p><h2>'+escapeHTML(p.title)+'</h2><p>'+escapeHTML(p.description)+'</p><p>One of one. Please enquire directly for availability and further details.</p><a class="button button-dark" href="https://wa.me/27736453141?text='+encodeURIComponent('Hello, I would like to enquire about '+p.title+' ('+p.code+').')+'" target="_blank" rel="noreferrer">Enquire about this piece ↗</a></div>';
+ const position=products.findIndex(x=>x.code===code)+1;
+ $('#modal-content').innerHTML='<div class="modal-image-stage"><img src="'+escapeHTML(p.image)+'" alt="'+escapeHTML(p.alt)+'"><span class="modal-image-label">EDMOND CLINTON INC. / OBJECT '+String(position).padStart(3,'0')+'</span></div><div class="modal-copy"><p class="eyebrow">THE LIVING ARCHIVE — '+p.code+'</p><p class="modal-edition">'+escapeHTML(p.category)+' / ONE OF ONE</p><h2>'+escapeHTML(p.title)+'</h2><div class="modal-rule"></div><p class="modal-description">'+escapeHTML(p.description)+'</p><p class="modal-note">A singular object, carrying its own material history. Enquire with the studio for availability and further details.</p><a class="button button-dark" href="https://wa.me/27736453141?text='+encodeURIComponent('Hello, I would like to enquire about '+p.title+' ('+p.code+').')+'" target="_blank" rel="noreferrer">Request this piece <span>↗</span></a><p class="modal-foot">CAPE TOWN · MADE BY HAND · NO DUPLICATES</p></div>';
  $('#product-modal').classList.add('open');$('#product-modal').setAttribute('aria-hidden','false');document.body.style.overflow='hidden';
 }
 function closeModal(){$('#product-modal').classList.remove('open');$('#product-modal').setAttribute('aria-hidden','true');document.body.style.overflow=''}
@@ -50,4 +51,5 @@ $('.modal-close').addEventListener('click',closeModal);
 $('#product-modal').addEventListener('click',e=>{if(e.target.id==='product-modal')closeModal()});
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
 $('#commission-form').addEventListener('submit',e=>{e.preventDefault();const f=new FormData(e.currentTarget);const msg=['Hello Edmond Clinton Inc., I would like to discuss a commission.','Name: '+f.get('name'),'Contact: '+f.get('contact'),'Material history: '+(f.get('material')||'Not specified'),'The vision: '+(f.get('vision')||'Not specified')].join('\n');window.open('https://wa.me/27736453141?text='+encodeURIComponent(msg),'_blank','noopener,noreferrer')});
+if('IntersectionObserver' in window){const revealObserver=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('is-visible');revealObserver.unobserve(entry.target)}}),{threshold:.12});document.querySelectorAll('.reveal-section').forEach(section=>revealObserver.observe(section))}else{document.querySelectorAll('.reveal-section').forEach(section=>section.classList.add('is-visible'))}
 init();
