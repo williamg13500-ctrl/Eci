@@ -88,7 +88,7 @@ async function composeHeroBackdrop(){
   const mctx=maskCanvas.getContext('2d');
   const maskPixels=mctx.createImageData(mw,mh);
   for(let i=0;i<maskValues.length;i++){
-   const a=maskValues[i]>0?255:0, j=i*4;
+   const a=maskValues[i]===0?255:0, j=i*4;
    maskPixels.data[j]=255;maskPixels.data[j+1]=255;maskPixels.data[j+2]=255;maskPixels.data[j+3]=a;
   }
   const smallMask=document.createElement('canvas');smallMask.width=mw;smallMask.height=mh;
