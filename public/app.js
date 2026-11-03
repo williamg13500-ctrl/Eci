@@ -3,6 +3,7 @@ const BASE='https://asset-huggers.lovable.app';
 const filters=['All','Tees','Denim','Outerwear','Footwear','Bags'];
 let products=[];
 let activeFilter='All';
+let searchQuery='';
 /* Gallery-led presentation; category navigation only. */
 const $=(s,root=document)=>root.querySelector(s);
 const escapeHTML=s=>String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -21,10 +22,16 @@ function renderFilters(){
  $('#filters').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{activeFilter=b.dataset.filter;renderFilters();renderProducts()}));
 }
 function renderProducts(){
- const shown=activeFilter==='All'?products:products.filter(p=>p.category===activeFilter);
+ const term=searchQuery.trim().toLocaleLowerCase();
+ const shown=products.filter(p=>{
+  const categoryMatch=activeFilter==='All'||p.category===activeFilter;
+  const searchMatch=!term||[p.title,p.description,p.category,p.code].some(value=>String(value||'').toLocaleLowerCase().includes(term));
+  return categoryMatch&&searchMatch;
+ });
  $('#item-count').textContent=shown.length;
- $('#product-grid').innerHTML=shown.map((p)=>'<article class="product-card" tabindex="0" role="button" data-code="'+p.code+'" aria-label="View '+escapeHTML(p.title)+'"><div class="product-image-wrap"><img loading="lazy" src="'+escapeHTML(p.image)+'" alt="'+escapeHTML(p.alt)+'"><span class="product-number">'+p.code+'</span></div><div class="product-info"><div><h3>'+escapeHTML(p.title)+'</h3><p>'+escapeHTML(p.description)+'</p></div><span class="product-category">'+escapeHTML(p.category)+'</span></div></article>').join('');
+ $('#product-grid').innerHTML=shown.length?shown.map((p)=>'<article class="product-card" tabindex="0" role="button" data-code="'+p.code+'" aria-label="View '+escapeHTML(p.title)+'"><div class="product-image-wrap"><img loading="lazy" src="'+escapeHTML(p.image)+'" alt="'+escapeHTML(p.alt)+'"><span class="product-number">'+p.code+'</span></div><div class="product-info"><div><h3>'+escapeHTML(p.title)+'</h3><p>'+escapeHTML(p.description)+'</p></div><span class="product-category">'+escapeHTML(p.category)+'</span></div></article>').join(''):'<div class="archive-empty"><p>No pieces match that search.</p><button type="button" id="clear-archive-search">Clear search and filters</button></div>';
  $('#product-grid').querySelectorAll('.product-card').forEach(card=>{const open=()=>showProduct(card.dataset.code);card.addEventListener('click',open);card.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();open()}})});
+ const clear=$('#clear-archive-search');if(clear)clear.addEventListener('click',()=>{searchQuery='';activeFilter='All';$('#archive-search').value='';renderFilters();renderProducts()});
 }
 function showProduct(code){
  const p=products.find(x=>x.code===code);if(!p)return;
@@ -46,6 +53,8 @@ async function init(){
   renderFilters();renderProducts();loadCanvases(html);
  }catch(err){$('#product-grid').innerHTML='<p class="loading">The archive could not be loaded. Please refresh or contact the studio.</p>';console.error(err)}
 }
+$('#archive-search').addEventListener('input',e=>{searchQuery=e.currentTarget.value;renderProducts()});
+$('#discover-piece').addEventListener('click',()=>{if(!products.length)return;const piece=products[Math.floor(Math.random()*products.length)];showProduct(piece.code)});
 $('.menu-toggle').addEventListener('click',()=>{const nav=$('.main-nav'),open=nav.classList.toggle('open');$('.menu-toggle').setAttribute('aria-expanded',String(open))});
 $('.main-nav').querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{$('.main-nav').classList.remove('open');$('.menu-toggle').setAttribute('aria-expanded','false')}));
 $('.modal-close').addEventListener('click',closeModal);

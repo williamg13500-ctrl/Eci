@@ -203,4 +203,17 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
  .modal-content{grid-template-columns:1fr;max-height:88vh}.modal-image-stage{min-height:0;height:40vh}.modal-image-stage img{max-height:40vh;padding:5%}.modal-copy{padding:25px}.modal-copy h2{font-size:38px}.modal-close{top:8px;right:14px}
 }
 @media(min-width:651px) and (max-width:800px){.hero{grid-template-columns:1fr;display:grid}.hero-visual{width:min(100%,600px)}.model-editorial-heading h2{font-size:clamp(70px,10vw,94px)}}
+.archive-discovery-controls{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;margin:26px 0 34px;padding:18px 0;border-top:1px solid rgba(53,43,31,.22);border-bottom:1px solid rgba(53,43,31,.22)}
+.archive-search{display:flex;flex-direction:column;gap:9px;flex:1;max-width:560px}
+.archive-search span{font-size:8px;letter-spacing:.19em;color:#6d5a44}
+.archive-search input{width:100%;min-height:46px;padding:12px 14px;border:1px solid rgba(61,49,35,.35);border-radius:0;background:rgba(235,226,211,.42);color:#29231d;font:inherit;font-size:12px;outline:none}
+.archive-search input:focus{border-color:#8a6848;box-shadow:0 0 0 2px rgba(138,104,72,.13)}
+.archive-search input::placeholder{color:#766c5d}
+.discover-button{min-height:46px;padding:0 20px;border:1px solid #6c533b;background:#2a261f;color:#eee5d7;text-transform:uppercase;font-size:8px;letter-spacing:.16em;cursor:pointer;transition:background .25s,transform .25s}
+.discover-button span{margin-left:18px;color:#c5a47b}
+.discover-button:hover{background:#6c533b;transform:translateY(-2px)}
+.archive-empty{grid-column:1/-1;padding:55px 20px;text-align:center;border:1px solid rgba(61,49,35,.25);background:rgba(235,226,211,.28)}
+.archive-empty p{font-family:var(--serif);font-size:26px;color:#342d24}
+.archive-empty button{border:0;border-bottom:1px solid #806447;padding:8px 0;background:transparent;color:#654b32;font-size:9px;letter-spacing:.12em;text-transform:uppercase;cursor:pointer}
+@media(max-width:650px){.archive-discovery-controls{align-items:stretch;flex-direction:column;gap:12px;margin:18px 0 28px}.archive-search{max-width:none}.discover-button{width:100%;justify-content:center}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}.reveal-section{opacity:1;transform:none}}
