@@ -82,11 +82,16 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
 .product-image-wrap:before{content:"";position:absolute;inset:9px;border:1px solid rgba(255,249,238,.24);z-index:0;pointer-events:none}
 .product-image-wrap:after{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;background:linear-gradient(145deg,rgba(255,255,255,.16),transparent 38%,rgba(33,27,20,.12))}
 .product-image-wrap img{width:100%;height:100%;padding:10%!important;object-fit:contain!important;position:relative;z-index:1;filter:drop-shadow(0 17px 14px rgba(27,22,16,.18))!important;mix-blend-mode:normal!important;transition:transform .8s cubic-bezier(.2,.7,.2,1)}
-/* Four room materials; tonal differences are deliberately restrained so the garment remains the focal point. */
-.product-card:nth-child(4n+1) .product-image-wrap{background:linear-gradient(145deg,rgba(230,219,200,.92),rgba(170,151,125,.95)),var(--wall-image);background-size:cover;background-position:30% 45%}
-.product-card:nth-child(4n+2) .product-image-wrap{background:radial-gradient(ellipse at 50% 22%,#847968 0%,#5d584b 56%,#302e28 100%)}
-.product-card:nth-child(4n+3) .product-image-wrap{background:linear-gradient(135deg,#b9b9ad 0%,#d1cbbf 48%,#898a7e 100%)}
-.product-card:nth-child(4n) .product-image-wrap{background:radial-gradient(ellipse at 50% 28%,#b28f6a 0%,#78634c 58%,#41382d 100%)}
+/* Each object is staged inside a distinct architectural gallery room — never a blank retail tile. */
+.product-image-wrap{background-color:#8c806d;background-image:linear-gradient(180deg,rgba(37,31,24,.04),rgba(37,31,24,.28)),radial-gradient(ellipse at 50% 13%,rgba(255,224,177,.55),transparent 38%),var(--wall-image)!important;background-size:cover,cover,cover!important;background-position:center,center,center!important}
+.product-image-wrap:before{inset:10px 10px 18px;border:1px solid rgba(245,231,208,.42);box-shadow:inset 0 0 0 7px rgba(42,34,25,.08),0 0 0 1px rgba(38,31,23,.12)}
+.product-image-wrap:after{background:linear-gradient(180deg,rgba(31,27,22,.12),transparent 26%,transparent 72%,rgba(31,26,20,.38)),linear-gradient(90deg,rgba(34,29,23,.16),transparent 18%,transparent 82%,rgba(34,29,23,.16))}
+.product-card:nth-child(4n+1) .product-image-wrap{background-image:linear-gradient(180deg,rgba(40,32,24,.08),rgba(40,32,24,.28)),radial-gradient(ellipse at 50% 8%,rgba(255,226,186,.68),transparent 34%),url('/images/campaign-backdrop-limestone.jpg')!important}
+.product-card:nth-child(4n+2) .product-image-wrap{background-image:linear-gradient(180deg,rgba(22,20,17,.12),rgba(22,20,17,.52)),radial-gradient(ellipse at 50% 8%,rgba(221,183,130,.58),transparent 32%),url('/images/campaign-backdrop-limestone.jpg')!important;background-position:center,center,68% center!important}
+.product-card:nth-child(4n+3) .product-image-wrap{background-image:linear-gradient(180deg,rgba(46,43,35,.06),rgba(46,43,35,.32)),radial-gradient(ellipse at 50% 8%,rgba(238,226,204,.64),transparent 34%),url('/images/campaign-backdrop-limestone.jpg')!important;background-position:center,center,24% center!important}
+.product-card:nth-child(4n) .product-image-wrap{background-image:linear-gradient(180deg,rgba(43,31,22,.12),rgba(43,31,22,.42)),radial-gradient(ellipse at 50% 8%,rgba(211,164,112,.64),transparent 34%),url('/images/campaign-backdrop-limestone.jpg')!important;background-position:center,center,82% center!important}
+.product-image-wrap img{padding:8%!important;filter:drop-shadow(0 22px 18px rgba(20,16,12,.28))!important}
+.product-card:hover .product-image-wrap{box-shadow:0 30px 60px rgba(35,27,19,.3),inset 0 0 0 8px rgba(238,229,214,.2)}
 .product-card:hover .product-image-wrap{box-shadow:0 25px 50px rgba(35,27,19,.24),inset 0 0 0 8px rgba(238,229,214,.2);transform:translateY(-3px)}
 .product-card:hover .product-image-wrap img{transform:scale(1.035)}
 .product-number{position:absolute;z-index:2;left:16px;top:16px;background:rgba(35,31,25,.76);color:#eee4d4;border:1px solid rgba(190,157,119,.42);padding:7px 9px;font-size:8px;letter-spacing:.18em}
