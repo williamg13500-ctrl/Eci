@@ -67,11 +67,12 @@ async function composeHeroBackdrop(){
   const segmenter=await vision.ImageSegmenter.createFromOptions(fileset,{
    baseOptions:{modelAssetPath:'https://storage.googleapis.com/mediapipe-models/image_segmenter/selfie_segmenter/float16/1/selfie_segmenter.tflite'},
    runningMode:'IMAGE',
-   outputCategoryMask:true,
-   outputConfidenceMasks:false
+   outputCategoryMask:false,
+   outputConfidenceMasks:true
   });
   const result=segmenter.segment(photo);
-  const mask=result.categoryMask;
+  const isConfidenceMask=!!result.confidenceMasks?.[1];
+  const mask=result.confidenceMasks?.[1]||result.categoryMask;
   if(!mask)throw new Error('No person mask returned');
   const w=photo.naturalWidth,h=photo.naturalHeight;
   canvas.width=w;canvas.height=h;
@@ -82,13 +83,16 @@ async function composeHeroBackdrop(){
   const scale=Math.max(w/bg.naturalWidth,h/bg.naturalHeight);
   const bw=bg.naturalWidth*scale,bh=bg.naturalHeight*scale;
   bctx.drawImage(bg,(w-bw)/2,(h-bh)/2,bw,bh);
-  const maskValues=mask.getAsUint8Array();
+  const maskValues=mask.getAsFloat32Array?mask.getAsFloat32Array():mask.getAsUint8Array();
   const mw=mask.width,mh=mask.height;
   const maskCanvas=document.createElement('canvas');maskCanvas.width=w;maskCanvas.height=h;
   const mctx=maskCanvas.getContext('2d');
   const maskPixels=mctx.createImageData(mw,mh);
   for(let i=0;i<maskValues.length;i++){
-   const a=maskValues[i]===0?255:0, j=i*4;
+   const confidence=maskValues[i];
+   const person=isConfidenceMask?confidence:(confidence===0?1:0);
+   const smooth=Math.max(0,Math.min(1,(person-.28)/.42));
+   const a=Math.round(smooth*smooth*(3-2*smooth)*255), j=i*4;
    maskPixels.data[j]=255;maskPixels.data[j+1]=255;maskPixels.data[j+2]=255;maskPixels.data[j+3]=a;
   }
   const smallMask=document.createElement('canvas');smallMask.width=mw;smallMask.height=mh;
