@@ -83,14 +83,29 @@ async function composeHeroBackdrop(){
   const bw=bg.naturalWidth*scale,bh=bg.naturalHeight*scale;
   bctx.drawImage(bg,(w-bw)/2,(h-bh)/2,bw,bh);
   const maskValues=mask.getAsFloat32Array?mask.getAsFloat32Array():mask.getAsUint8Array();
-  const mw=mask.width,mh=mask.height;
+  const mw=mask.width,mh=mask.height,n=mw*mh;
+  const labels=new Int32Array(n),queue=new Int32Array(n);
+  let component=0,largestComponent=0,largestSize=0;
+  for(let start=0;start<n;start++){
+   if(maskValues[start]!==0||labels[start]!==0)continue;
+   component++;let head=0,tail=0;queue[tail++]=start;labels[start]=component;
+   while(head<tail){
+    const at=queue[head++],x=at%mw,y=(at/mw)|0;
+    for(let dy=-1;dy<=1;dy++)for(let dx=-1;dx<=1;dx++){
+     if(!dx&&!dy)continue;const nx=x+dx,ny=y+dy;
+     if(nx<0||ny<0||nx>=mw||ny>=mh)continue;
+     const next=ny*mw+nx;
+     if(maskValues[next]===0&&labels[next]===0){labels[next]=component;queue[tail++]=next;}
+    }
+   }
+   if(tail>largestSize){largestSize=tail;largestComponent=component;}
+  }
+  if(!largestComponent)throw new Error('Person region not detected');
   const maskCanvas=document.createElement('canvas');maskCanvas.width=w;maskCanvas.height=h;
   const mctx=maskCanvas.getContext('2d');
   const maskPixels=mctx.createImageData(mw,mh);
-  for(let i=0;i<maskValues.length;i++){
-   const person=maskValues[i]===0?1:0;
-   const smooth=Math.max(0,Math.min(1,(person-.22)/.48));
-   const a=Math.round(smooth*smooth*(3-2*smooth)*255), j=i*4;
+  for(let i=0;i<n;i++){
+   const a=labels[i]===largestComponent?255:0,j=i*4;
    maskPixels.data[j]=255;maskPixels.data[j+1]=255;maskPixels.data[j+2]=255;maskPixels.data[j+3]=a;
   }
   const smallMask=document.createElement('canvas');smallMask.width=mw;smallMask.height=mh;
