@@ -64,7 +64,7 @@ h1,h2,.hero-kicker,.canvas-card p,.modal-copy h2{font-family:'Italiana',serif}
 .hero h1{letter-spacing:-.045em}
 .hero-intro{max-width:410px;line-height:2}
 .hero-visual{border:10px solid #f1eadf;outline:1px solid rgba(69,54,39,.3);outline-offset:-1px;box-shadow:0 24px 70px rgba(40,31,21,.16)}
-.hero-main-image{filter:none!important;mix-blend-mode:normal!important}
+.hero-main-image{filter:none!important;mix-blend-mode:normal!important;transition:opacity .25s ease}.hero-main-image.is-composited{opacity:0}.hero-composite-canvas{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 30%;opacity:0;transition:opacity .5s ease;z-index:1}.hero-composite-canvas.is-ready{opacity:1}.hero-visual .image-note,.hero-visual .hero-stamp{z-index:2}
 .hero-visual:after{background:linear-gradient(180deg,rgba(18,16,13,.02),transparent 55%,rgba(18,16,13,.14))}
 .hero-stamp{background:#9b7653;color:#f1e8db}
 .manifesto-strip{gap:clamp(18px,3vw,42px);padding:24px 5vw;border-top:1px solid #51483c;border-bottom:1px solid #51483c}

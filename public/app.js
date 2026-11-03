@@ -53,3 +53,53 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
 $('#commission-form').addEventListener('submit',e=>{e.preventDefault();const f=new FormData(e.currentTarget);const msg=['Hello Edmond Clinton Inc., I would like to discuss a commission.','Name: '+f.get('name'),'Contact: '+f.get('contact'),'Material history: '+(f.get('material')||'Not specified'),'The vision: '+(f.get('vision')||'Not specified')].join('\n');window.open('https://wa.me/27736453141?text='+encodeURIComponent(msg),'_blank','noopener,noreferrer')});
 if('IntersectionObserver' in window){const revealObserver=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('is-visible');revealObserver.unobserve(entry.target)}}),{threshold:.12});document.querySelectorAll('.reveal-section').forEach(section=>revealObserver.observe(section))}else{document.querySelectorAll('.reveal-section').forEach(section=>section.classList.add('is-visible'))}
 init();
+
+/* Preserve the exact campaign subject pixels; replace only the surrounding scene.
+   If segmentation cannot load, the original photograph remains visible unchanged. */
+async function composeHeroBackdrop(){
+ const photo=document.getElementById('hero-original-image');
+ const canvas=document.getElementById('hero-composite-canvas');
+ if(!photo||!canvas)return;
+ try{
+  if(!photo.complete)await new Promise((resolve,reject)=>{photo.onload=resolve;photo.onerror=reject});
+  const vision=await import('https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.14/vision_bundle.mjs');
+  const fileset=await vision.FilesetResolver.forVisionTasks('https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.14/wasm');
+  const segmenter=await vision.ImageSegmenter.createFromOptions(fileset,{
+   baseOptions:{modelAssetPath:'https://storage.googleapis.com/mediapipe-models/image_segmenter/selfie_segmenter/float16/1/selfie_segmenter.tflite'},
+   runningMode:'IMAGE',
+   outputCategoryMask:true,
+   outputConfidenceMasks:false
+  });
+  const result=segmenter.segment(photo);
+  const mask=result.categoryMask;
+  if(!mask)throw new Error('No person mask returned');
+  const w=photo.naturalWidth,h=photo.naturalHeight;
+  canvas.width=w;canvas.height=h;
+  const bg=new Image();bg.src='/images/campaign-backdrop-limestone.jpg';
+  if(!bg.complete)await new Promise((resolve,reject)=>{bg.onload=resolve;bg.onerror=reject});
+  const back=document.createElement('canvas');back.width=w;back.height=h;
+  const bctx=back.getContext('2d');
+  const scale=Math.max(w/bg.naturalWidth,h/bg.naturalHeight);
+  const bw=bg.naturalWidth*scale,bh=bg.naturalHeight*scale;
+  bctx.drawImage(bg,(w-bw)/2,(h-bh)/2,bw,bh);
+  const maskValues=mask.getAsUint8Array();
+  const mw=mask.width,mh=mask.height;
+  const maskCanvas=document.createElement('canvas');maskCanvas.width=w;maskCanvas.height=h;
+  const mctx=maskCanvas.getContext('2d');
+  const maskPixels=mctx.createImageData(mw,mh);
+  for(let i=0;i<maskValues.length;i++){
+   const a=maskValues[i]>0?255:0, j=i*4;
+   maskPixels.data[j]=255;maskPixels.data[j+1]=255;maskPixels.data[j+2]=255;maskPixels.data[j+3]=a;
+  }
+  const smallMask=document.createElement('canvas');smallMask.width=mw;smallMask.height=mh;
+  smallMask.getContext('2d').putImageData(maskPixels,0,0);
+  mctx.filter='blur(1.1px)';mctx.drawImage(smallMask,0,0,w,h);mctx.filter='none';
+  const subject=document.createElement('canvas');subject.width=w;subject.height=h;
+  const sctx=subject.getContext('2d');sctx.drawImage(photo,0,0,w,h);
+  sctx.globalCompositeOperation='destination-in';sctx.drawImage(maskCanvas,0,0,w,h);sctx.globalCompositeOperation='source-over';
+  const ctx=canvas.getContext('2d');ctx.drawImage(back,0,0);ctx.drawImage(subject,0,0);
+  canvas.classList.add('is-ready');photo.classList.add('is-composited');
+  segmenter.close();
+ }catch(error){console.warn('ECI background composite unavailable; original campaign photograph retained.',error)}
+}
+if(document.readyState==='complete')composeHeroBackdrop();else window.addEventListener('load',composeHeroBackdrop,{once:true});
