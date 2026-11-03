@@ -3,6 +3,7 @@ const BASE='https://asset-huggers.lovable.app';
 const filters=['All','Tees','Denim','Outerwear','Footwear','Bags'];
 let products=[];
 let activeFilter='All';
+let archiveQuery='';
 const $=(s,root=document)=>root.querySelector(s);
 const escapeHTML=s=>String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 function imageURL(src){return src.startsWith('http')?src:BASE+src}
@@ -20,7 +21,8 @@ function renderFilters(){
  $('#filters').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{activeFilter=b.dataset.filter;renderFilters();renderProducts()}));
 }
 function renderProducts(){
- const shown=activeFilter==='All'?products:products.filter(p=>p.category===activeFilter);
+ const normalized=archiveQuery.trim().toLowerCase();
+ const shown=products.filter(p=>(activeFilter==='All'||p.category===activeFilter)&&(!normalized||[p.title,p.description,p.code,p.category].join(' ').toLowerCase().includes(normalized)));
  $('#item-count').textContent=shown.length;
  $('#product-grid').innerHTML=shown.map((p)=>'<article class="product-card" tabindex="0" role="button" data-code="'+p.code+'" aria-label="View '+escapeHTML(p.title)+'"><div class="product-image-wrap"><img loading="lazy" src="'+escapeHTML(p.image)+'" alt="'+escapeHTML(p.alt)+'"><span class="product-number">'+p.code+'</span></div><div class="product-info"><div><h3>'+escapeHTML(p.title)+'</h3><p>'+escapeHTML(p.description)+'</p></div><span class="product-category">'+escapeHTML(p.category)+'</span></div></article>').join('');
  $('#product-grid').querySelectorAll('.product-card').forEach(card=>{const open=()=>showProduct(card.dataset.code);card.addEventListener('click',open);card.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();open()}})});
@@ -52,6 +54,8 @@ $('#product-modal').addEventListener('click',e=>{if(e.target.id==='product-modal
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
 $('#commission-form').addEventListener('submit',e=>{e.preventDefault();const f=new FormData(e.currentTarget);const msg=['Hello Edmond Clinton Inc., I would like to discuss a commission.','Name: '+f.get('name'),'Contact: '+f.get('contact'),'Material history: '+(f.get('material')||'Not specified'),'The vision: '+(f.get('vision')||'Not specified')].join('\n');window.open('https://wa.me/27736453141?text='+encodeURIComponent(msg),'_blank','noopener,noreferrer')});
 if('IntersectionObserver' in window){const revealObserver=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('is-visible');revealObserver.unobserve(entry.target)}}),{threshold:.12});document.querySelectorAll('.reveal-section').forEach(section=>revealObserver.observe(section))}else{document.querySelectorAll('.reveal-section').forEach(section=>section.classList.add('is-visible'))}
+$('#archive-search')?.addEventListener('input',e=>{archiveQuery=e.target.value;renderProducts()});
+$('#archive-discover')?.addEventListener('click',()=>{if(!products.length)return;const pool=products.filter(p=>(activeFilter==='All'||p.category===activeFilter)&&(!archiveQuery||[p.title,p.description,p.code,p.category].join(' ').toLowerCase().includes(archiveQuery.toLowerCase())));const pick=pool.length?pool[Math.floor(Math.random()*pool.length)]:products[Math.floor(Math.random()*products.length)];showProduct(pick.code)});
 init();
 
 /* Preserve the exact campaign subject pixels; replace only the surrounding scene.
@@ -60,6 +64,17 @@ async function composeHeroBackdrop(){
  const photo=document.getElementById('hero-original-image');
  const canvas=document.getElementById('hero-composite-canvas');
  if(!photo||!canvas)return;
+ try{
+  const saved=localStorage.getItem('eci-hero-composite-v1');
+  if(saved){
+   const cached=new Image();cached.src=saved;
+   await cached.decode();
+   canvas.width=cached.naturalWidth;canvas.height=cached.naturalHeight;
+   canvas.getContext('2d').drawImage(cached,0,0);
+   canvas.classList.add('is-ready');photo.classList.add('is-composited');
+   return;
+  }
+ }catch(cacheError){console.info('ECI composite cache unavailable; creating it once.',cacheError)}
  try{
   if(!photo.complete)await new Promise((resolve,reject)=>{photo.onload=resolve;photo.onerror=reject});
   const vision=await import('https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.14/vision_bundle.mjs');
@@ -116,7 +131,9 @@ async function composeHeroBackdrop(){
   sctx.globalCompositeOperation='destination-in';sctx.drawImage(maskCanvas,0,0,w,h);sctx.globalCompositeOperation='source-over';
   const ctx=canvas.getContext('2d');ctx.drawImage(back,0,0);ctx.drawImage(subject,0,0);
   canvas.classList.add('is-ready');photo.classList.add('is-composited');
+  try{localStorage.setItem('eci-hero-composite-v1',canvas.toDataURL('image/jpeg',.82))}catch(cacheError){console.info('ECI composite could not be cached.',cacheError)}
   segmenter.close();
  }catch(error){console.warn('ECI background composite unavailable; original campaign photograph retained.',error)}
 }
-if(document.readyState==='complete')composeHeroBackdrop();else window.addEventListener('load',composeHeroBackdrop,{once:true});
+const scheduleHeroComposite=()=>{const run=()=>{if('requestIdleCallback'in window)requestIdleCallback(()=>composeHeroBackdrop(),{timeout:3500});else setTimeout(composeHeroBackdrop,2200)};setTimeout(run,1800)};
+if(document.readyState==='complete')scheduleHeroComposite();else window.addEventListener('load',scheduleHeroComposite,{once:true});
