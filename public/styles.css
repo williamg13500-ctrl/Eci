@@ -105,6 +105,30 @@ h1,h2,.hero-kicker,.canvas-card p,.modal-copy h2{font-family:'Italiana',serif}
 @media(max-width:650px){.hero-visual{height:auto;aspect-ratio:3/4}}
 /* Gallery-first archive: retain only the restrained category index. */
 /* Exhibition direction: quiet gallery walls, generous scale, unaltered artwork */
+/* ECI gallery rooms — varied architectural settings around untouched source photographs */
+.archive-section{position:relative;isolation:isolate;background:linear-gradient(180deg,#d9d0c2 0%,#e7e0d4 28%,#d7cdbd 100%)!important}
+.archive-section:before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;opacity:.58;background:repeating-linear-gradient(90deg,transparent 0,transparent 24.8%,rgba(91,76,58,.055) 25%,transparent 25.15%),linear-gradient(115deg,rgba(255,255,255,.26),transparent 34%,rgba(77,61,44,.08) 100%)}
+.product-image-wrap{position:relative;isolation:isolate;overflow:hidden;border:1px solid rgba(83,67,49,.22)!important;box-shadow:0 15px 34px rgba(54,43,31,.10),inset 0 0 0 9px rgba(255,255,255,.13)!important;transition:background .35s ease,box-shadow .35s ease,transform .35s ease}
+.product-image-wrap:before{content:"";position:absolute;inset:9px;z-index:0;border:1px solid rgba(91,73,51,.12);pointer-events:none}
+.product-image-wrap:after{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;background:linear-gradient(125deg,rgba(255,255,255,.24),transparent 35%,rgba(45,37,27,.07));mix-blend-mode:multiply}
+.product-image-wrap img{position:relative;z-index:1;padding:11%!important;filter:drop-shadow(0 13px 12px rgba(35,29,22,.14))!important}
+.product-card:nth-child(6n+1) .product-image-wrap{background:radial-gradient(ellipse at 50% 25%,#f0e8d9 0%,#d9cbb5 58%,#bca98f 100%)!important}
+.product-card:nth-child(6n+2) .product-image-wrap{background:linear-gradient(90deg,rgba(104,91,74,.10) 1px,transparent 1px),linear-gradient(0deg,rgba(104,91,74,.08) 1px,transparent 1px),linear-gradient(140deg,#d7d0c4,#b9b0a2 75%,#a79b89)!important;background-size:34px 34px,34px 34px,auto!important}
+.product-card:nth-child(6n+3) .product-image-wrap{background:radial-gradient(ellipse at 48% 28%,#e9e1d6 0%,#c8c0b4 64%,#aaa294 100%)!important}
+.product-card:nth-child(6n+4) .product-image-wrap{background:linear-gradient(115deg,rgba(255,255,255,.22),transparent 35%),repeating-linear-gradient(0deg,rgba(93,76,56,.035) 0 1px,transparent 1px 5px),linear-gradient(135deg,#d9c8b4,#bca58b)!important}
+.product-card:nth-child(6n+5) .product-image-wrap{background:radial-gradient(ellipse at 50% 30%,#e5e4d9 0%,#c8cbbd 62%,#a8ad9d 100%)!important}
+.product-card:nth-child(6n) .product-image-wrap{background:linear-gradient(145deg,#d6cfc3 0%,#c4b8a7 50%,#a99a87 100%)!important}
+.product-card:hover .product-image-wrap{box-shadow:0 22px 42px rgba(54,43,31,.16),inset 0 0 0 9px rgba(255,255,255,.16)!important;transform:translateY(-3px)}
+/* Canvas Room reads as a real exhibition wall with individual framed works */
+.canvas-section{position:relative;background:linear-gradient(115deg,#c9c0b2 0%,#e2dbcf 48%,#c7bdad 100%)!important;isolation:isolate}
+.canvas-section:before{content:"";position:absolute;inset:0;z-index:-1;opacity:.38;background:repeating-linear-gradient(90deg,transparent 0,transparent calc(33.333% - 1px),rgba(76,62,47,.18) 33.333%,transparent calc(33.333% + 1px)),linear-gradient(180deg,rgba(255,255,255,.24),transparent 38%,rgba(75,59,42,.10))}
+.canvas-card{position:relative;padding:15px 15px 22px!important;background:linear-gradient(145deg,#eee8dc,#d7cdbd)!important;border:1px solid rgba(71,57,41,.24)!important;box-shadow:0 18px 32px rgba(49,39,28,.15),inset 0 0 0 5px rgba(255,255,255,.38)!important}
+.canvas-card:before{content:"";position:absolute;inset:8px;border:1px solid rgba(93,73,51,.17);pointer-events:none;z-index:1}
+.canvas-card img{position:relative;background:radial-gradient(ellipse at 50% 35%,#ece5d8,#c9bba7)!important;padding:8%!important;box-shadow:0 8px 18px rgba(40,31,22,.13)}
+.canvas-card p{padding:8px 3px 0;color:#29251f}
+.canvas-card span{padding:0 3px;color:#716656;letter-spacing:.13em;text-transform:uppercase;font-size:8px}
+.modal-image-stage{background:radial-gradient(ellipse at 50% 30%,#eee5d7 0%,#cfc1ae 68%,#aa9a85 100%)!important}
+@media(max-width:650px){.product-image-wrap img{padding:9%!important}.canvas-card{padding:9px 9px 16px!important}.canvas-section:before{background:linear-gradient(180deg,rgba(255,255,255,.18),transparent 55%,rgba(75,59,42,.08))}}
 :root{--paper:#e8e4dc;--paper2:#f0ede7;--ink:#1b1b19;--muted:#77736b;--line:rgba(28,27,24,.2);--accent:#8a755d}
 body{background:#e8e4dc;background-image:none}
 .site-header{background:#e8e4dc}
@@ -135,3 +159,22 @@ body{background:#e8e4dc;background-image:none}
 .commission-section{background:#d0c9bd}
 @media(max-width:800px){.product-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:46px 18px}.canvas-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:30px 16px}.archive-section{padding-top:90px;padding-bottom:90px}}
 @media(max-width:420px){.product-grid{gap:36px 12px}.product-info h3{font-size:19px}.filter-button{margin-right:10px}}
+/* Final gallery-stage art direction: each object sits in a different architectural room */
+.archive-section{background:linear-gradient(180deg,#d9d0c2,#e7e0d4 35%,#d7cdbd)!important;position:relative}
+.product-image-wrap{position:relative;isolation:isolate;border:1px solid rgba(83,67,49,.24)!important;box-shadow:0 16px 34px rgba(54,43,31,.12),inset 0 0 0 8px rgba(255,255,255,.15)!important;overflow:hidden}
+.product-image-wrap:before{content:"";position:absolute;inset:9px;z-index:0;border:1px solid rgba(91,73,51,.13);pointer-events:none}
+.product-image-wrap img{position:relative;z-index:1;padding:11%!important;filter:drop-shadow(0 13px 12px rgba(35,29,22,.16))!important}
+.product-card:nth-child(6n+1) .product-image-wrap{background:radial-gradient(ellipse at 50% 25%,#f0e8d9,#d9cbb5 58%,#bca98f)!important}
+.product-card:nth-child(6n+2) .product-image-wrap{background:linear-gradient(90deg,rgba(104,91,74,.09) 1px,transparent 1px),linear-gradient(0deg,rgba(104,91,74,.07) 1px,transparent 1px),linear-gradient(140deg,#d7d0c4,#b9b0a2 75%,#a79b89)!important;background-size:34px 34px,34px 34px,auto!important}
+.product-card:nth-child(6n+3) .product-image-wrap{background:radial-gradient(ellipse at 48% 28%,#e9e1d6,#c8c0b4 64%,#aaa294)!important}
+.product-card:nth-child(6n+4) .product-image-wrap{background:repeating-linear-gradient(0deg,rgba(93,76,56,.035) 0 1px,transparent 1px 5px),linear-gradient(135deg,#d9c8b4,#bca58b)!important}
+.product-card:nth-child(6n+5) .product-image-wrap{background:radial-gradient(ellipse at 50% 30%,#e5e4d9,#c8cbbd 62%,#a8ad9d)!important}
+.product-card:nth-child(6n) .product-image-wrap{background:linear-gradient(145deg,#d6cfc3,#c4b8a7 50%,#a99a87)!important}
+.product-card:hover .product-image-wrap{transform:translateY(-3px);box-shadow:0 22px 42px rgba(54,43,31,.17)!important}
+.canvas-section{position:relative;background:linear-gradient(115deg,#c9c0b2,#e2dbcf 48%,#c7bdad)!important}
+.canvas-card{padding:15px 15px 22px!important;background:linear-gradient(145deg,#eee8dc,#d7cdbd)!important;border:1px solid rgba(71,57,41,.24)!important;box-shadow:0 18px 32px rgba(49,39,28,.15),inset 0 0 0 5px rgba(255,255,255,.38)!important}
+.canvas-card img{background:radial-gradient(ellipse at 50% 35%,#ece5d8,#c9bba7)!important;padding:8%!important;box-shadow:0 8px 18px rgba(40,31,22,.13)}
+.canvas-card p{padding:8px 3px 0;color:#29251f}
+.canvas-card span{padding:0 3px;color:#716656;letter-spacing:.13em;text-transform:uppercase;font-size:8px}
+.modal-image-stage{background:radial-gradient(ellipse at 50% 30%,#eee5d7,#cfc1ae 68%,#aa9a85)!important}
+@media(max-width:650px){.product-image-wrap img{padding:9%!important}.canvas-card{padding:9px 9px 16px!important}}
