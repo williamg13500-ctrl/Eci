@@ -100,3 +100,6 @@ h1,h2,.hero-kicker,.canvas-card p,.modal-copy h2{font-family:'Italiana',serif}
 .footer-links a{letter-spacing:.1em}
 :focus-visible{outline:2px solid #9b7653;outline-offset:4px}
 @media(max-width:650px){.hero{min-height:0}.hero-visual{border-width:7px}.manifesto-strip{gap:14px;padding:18px 5vw}.manifesto-strip i{font-size:6px}.product-image-wrap{padding:6px}.product-grid{row-gap:30px}.model-portrait{padding:4px}.announcement{font-size:7px;letter-spacing:.16em}}
+/* Keep the full-length original campaign silhouette in frame */
+.hero-visual{height:auto;aspect-ratio:3/4}
+@media(max-width:650px){.hero-visual{height:auto;aspect-ratio:3/4}}
