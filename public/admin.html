@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Administration — Edmond Clinton Inc.</title>
+<meta name="robots" content="noindex,nofollow">
+<style>
+:root{color-scheme:light;--ink:#28251f;--muted:#746b5e;--paper:#e9e3d8;--panel:#f4f0e8;--line:#c9bead;--accent:#876d4c}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:14px/1.5 Georgia,serif}
+header{padding:30px clamp(20px,5vw,72px);border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:20px}
+.brand{font:11px/1.5 Arial,sans-serif;letter-spacing:.25em;text-transform:uppercase}.eyebrow{font:10px Arial,sans-serif;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+main{max-width:1300px;margin:auto;padding:clamp(24px,5vw,64px)}h1{font-size:clamp(32px,5vw,58px);font-weight:400;margin:8px 0 28px}
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.panel{background:var(--panel);border:1px solid var(--line);padding:22px;min-width:0}.metric{font:38px Georgia,serif;margin-top:8px}.section{margin-top:36px}.section h2{font-size:24px;font-weight:400}.list{display:grid;grid-template-columns:1fr 1fr;gap:12px}.row{display:flex;justify-content:space-between;gap:16px;padding:12px 0;border-bottom:1px solid var(--line)}.muted{color:var(--muted)}a{color:var(--accent)}button{font:inherit;background:var(--ink);color:white;border:0;padding:10px 16px;cursor:pointer}
+#state{padding:14px 18px;background:#f4f0e8;border:1px solid var(--line);margin:16px 0}
+@media(max-width:800px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.list{grid-template-columns:1fr}}@media(max-width:420px){header{align-items:flex-start;flex-direction:column}.grid{gap:8px}.panel{padding:15px}.metric{font-size:30px}}
+</style>
+</head>
+<body>
+<header><div class="brand">Edmond Clinton Inc. <span class="muted">/ Administration</span></div><a href="/">Return to exhibition ↗</a></header>
+<main>
+<p class="eyebrow">Private workspace · Owner and administrators only</p>
+<h1>Studio overview</h1>
+<div id="state" role="status">Verifying administrator access…</div>
+<div id="dashboard" hidden>
+<div class="grid" id="metrics"></div>
+<section class="section"><p class="eyebrow">Inventory</p><h2>Availability overview</h2><div class="grid" id="availability"></div></section>
+<div class="list section"><section><p class="eyebrow">Catalogue</p><h2>Recently updated</h2><div class="panel" id="products"></div></section><section><p class="eyebrow">Operations</p><h2>Recent activity</h2><div class="panel" id="activity"></div></section></div>
+</div>
+</main>
+<script src="/admin-dashboard.js" defer></script>
+</body></html>
