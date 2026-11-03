@@ -36,9 +36,27 @@ function renderProducts(){
 function showProduct(code){
  const index=products.findIndex(x=>x.code===code);if(index<0)return;
  const p=products[index],position=index+1;
- $('#modal-content').innerHTML='<div class="modal-image-stage"><img src="'+escapeHTML(p.image)+'" alt="'+escapeHTML(p.alt)+'"><span class="modal-image-label">EDMOND CLINTON INC. / OBJECT '+String(position).padStart(3,'0')+'</span><div class="modal-object-nav"><button type="button" data-product-step="-1" aria-label="Previous archive object">←</button><span>'+String(position).padStart(3,'0')+' / '+String(products.length).padStart(3,'0')+'</span><button type="button" data-product-step="1" aria-label="Next archive object">→</button></div></div><div class="modal-copy"><p class="eyebrow">THE LIVING ARCHIVE — '+p.code+'</p><p class="modal-edition">'+escapeHTML(p.category)+' / ONE OF ONE</p><h2>'+escapeHTML(p.title)+'</h2><div class="modal-rule"></div><p class="detail-label">MATERIAL / SURFACE NOTE</p><p class="modal-description">'+escapeHTML(p.description)+'</p><div class="detail-facts"><span>EDITION</span><strong>ONE OF ONE</strong><span>OBJECT CODE</span><strong>'+p.code+'</strong><span>COLLECTION</span><strong>'+escapeHTML(p.category)+'</strong></div><p class="modal-note">For current availability, provenance and additional details, enquire directly with the studio. The photograph shown is the original archive image for this piece.</p><a class="button button-dark" href="https://wa.me/27736453141?text='+encodeURIComponent('Hello, I would like to enquire about '+p.title+' ('+p.code+').')+'" target="_blank" rel="noreferrer">Enquire about this piece <span>↗</span></a><p class="modal-foot">CAPE TOWN · MADE BY HAND · NO DUPLICATES</p></div>';
+ $('#modal-content').innerHTML='<div class="modal-image-stage"><img src="'+escapeHTML(p.image)+'" alt="'+escapeHTML(p.alt)+'"><span class="modal-image-label">EDMOND CLINTON INC. / OBJECT '+String(position).padStart(3,'0')+'</span><div class="modal-object-nav"><button type="button" data-product-step="-1" aria-label="Previous archive object">←</button><span>'+String(position).padStart(3,'0')+' / '+String(products.length).padStart(3,'0')+'</span><button type="button" data-product-step="1" aria-label="Next archive object">→</button></div><div class="product-gallery-rail" id="product-gallery-rail" hidden></div></div><div class="modal-copy"><p class="eyebrow">THE LIVING ARCHIVE — '+p.code+'</p><p class="modal-edition">'+escapeHTML(p.category)+' / ONE OF ONE</p><h2>'+escapeHTML(p.title)+'</h2><div class="modal-rule"></div><p class="detail-label">MATERIAL / SURFACE NOTE</p><p class="modal-description">'+escapeHTML(p.description)+'</p><div class="detail-facts"><span>EDITION</span><strong>ONE OF ONE</strong><span>OBJECT CODE</span><strong>'+p.code+'</strong><span>COLLECTION</span><strong>'+escapeHTML(p.category)+'</strong></div><p class="modal-note">For current availability, provenance and additional details, enquire directly with the studio. The photograph shown is the original archive image for this piece.</p><a class="button button-dark" href="https://wa.me/27736453141?text='+encodeURIComponent('Hello, I would like to enquire about '+p.title+' ('+p.code+').')+'" target="_blank" rel="noreferrer">Enquire about this piece <span>↗</span></a><p class="modal-foot">CAPE TOWN · MADE BY HAND · NO DUPLICATES</p></div>';
+ $('#modal-content').dataset.productCode=p.code;
+ loadProductGallery(p);
  $('#modal-content').querySelectorAll('[data-product-step]').forEach(button=>button.addEventListener('click',()=>{const next=(index+Number(button.dataset.productStep)+products.length)%products.length;showProduct(products[next].code)}));
  $('#product-modal').classList.add('open');$('#product-modal').setAttribute('aria-hidden','false');document.body.style.overflow='hidden';
+}
+async function loadProductGallery(product){
+ const rail=$('#product-gallery-rail');if(!rail)return;rail.hidden=true;rail.innerHTML='';
+ try{
+  const response=await fetch('/api/product-gallery?product_ref='+encodeURIComponent(product.code));
+  if(!response.ok)return;
+  const data=await response.json();
+  if($('#modal-content').dataset.productCode!==product.code)return;
+  const images=data.images||[];if(!images.length)return;
+  rail.innerHTML='<p class="product-gallery-heading">STUDIO DETAIL PHOTOGRAPHS · '+images.length+'</p><div class="product-gallery-thumbs">'+images.map((image,i)=>'<button type="button" class="product-gallery-thumb" data-detail-index="'+i+'" data-detail-src="'+escapeHTML(image.image_url)+'" data-detail-alt="'+escapeHTML(image.alt_text)+'" aria-label="View detail photograph '+(i+1)+': '+escapeHTML(image.alt_text)+'"><img src="'+escapeHTML(image.image_url)+'" alt="" loading="lazy"></button>').join('')+'</div>';
+  rail.hidden=false;
+  rail.querySelectorAll('.product-gallery-thumb').forEach(button=>button.addEventListener('click',()=>{
+   const main=$('#modal-content .modal-image-stage > img');main.src=button.dataset.detailSrc;main.alt=button.dataset.detailAlt;
+   rail.querySelectorAll('.product-gallery-thumb').forEach(item=>item.classList.toggle('selected',item===button));
+  }));
+ }catch(error){console.info('Product detail gallery unavailable.',error)}
 }
 function closeModal(){$('#product-modal').classList.remove('open');$('#product-modal').setAttribute('aria-hidden','true');if(!$('#campaign-lightbox').classList.contains('open'))document.body.style.overflow=''}
 let campaignIndex=0;

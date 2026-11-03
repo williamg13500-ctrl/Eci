@@ -1,0 +1,1 @@
+ALTER TABLE product_gallery_images ADD COLUMN IF NOT EXISTS storage_key text, ADD COLUMN IF NOT EXISTS detail_type text NOT NULL DEFAULT 'other', ADD COLUMN IF NOT EXISTS is_published boolean NOT NULL DEFAULT false, ADD COLUMN IF NOT EXISTS created_by text;
