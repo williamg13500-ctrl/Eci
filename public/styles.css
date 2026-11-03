@@ -178,3 +178,97 @@ body{background:#e8e4dc;background-image:none}
 .canvas-card span{padding:0 3px;color:#716656;letter-spacing:.13em;text-transform:uppercase;font-size:8px}
 .modal-image-stage{background:radial-gradient(ellipse at 50% 30%,#eee5d7,#cfc1ae 68%,#aa9a85)!important}
 @media(max-width:650px){.product-image-wrap img{padding:9%!important}.canvas-card{padding:9px 9px 16px!important}}
+
+/* 2026 gallery transformation — limestone, mineral plaster and exhibition lighting */
+:root{--paper:#d9d1c4;--paper2:#e9e2d6;--ink:#211e19;--muted:#756d61;--line:rgba(48,39,29,.24);--accent:#89684b}
+html{scroll-behavior:smooth;scroll-padding-top:86px}
+body{background-color:#c9c0b2;background-image:linear-gradient(rgba(39,33,26,.035),rgba(39,33,26,.035)),url('/images/campaign-backdrop-limestone.jpg');background-size:auto,cover;background-attachment:fixed;background-position:center;color:#25221d}
+.site-header{background:rgba(224,216,204,.94);backdrop-filter:blur(12px);border-bottom-color:rgba(55,45,34,.24)}
+.announcement{background:#211e19;color:#d8c9b7}
+.hero{min-height:760px;padding-top:76px;padding-bottom:72px;background:linear-gradient(90deg,rgba(220,212,199,.97),rgba(205,195,180,.88) 48%,rgba(39,34,28,.10))}
+.hero-copy{position:relative;z-index:2;padding:36px 0 62px}
+.hero-kicker{margin-top:48px;color:#716451;max-width:390px;line-height:1.8}
+.hero h1{font-size:clamp(82px,10vw,150px);line-height:.76;letter-spacing:-.055em}
+.hero-intro{color:#4d473e;max-width:360px}
+.hero-visual{height:min(70vw,650px);min-height:500px;display:grid;place-items:center;isolation:isolate;background-color:#b8aa96;background-image:linear-gradient(180deg,rgba(27,24,20,.06),rgba(27,24,20,.20)),url('/images/campaign-backdrop-limestone.jpg');background-size:cover;background-position:center;border:1px solid rgba(46,37,28,.36);box-shadow:0 38px 90px rgba(25,21,16,.26),inset 0 0 0 10px rgba(235,226,211,.35)}
+.hero-main-image{width:86%;height:88%;object-fit:contain;object-position:center;filter:none!important;mix-blend-mode:normal!important;box-shadow:0 22px 55px rgba(20,17,13,.22);border:8px solid rgba(238,230,216,.92);background:#bcb2a4}
+.hero-main-image.is-composited{opacity:1!important}
+.hero-composite-canvas{display:none!important}
+.hero-visual:after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(125deg,rgba(255,255,255,.12),transparent 35%,rgba(24,20,16,.15))}
+.hero-visual .image-note,.hero-visual .hero-stamp{z-index:2}
+.image-note{left:7%;right:7%;bottom:6%;background:linear-gradient(transparent,rgba(20,18,15,.66));padding:24px 16px 12px}
+.hero-stamp{right:-20px;top:28px;background:#29251f;border:1px solid #a88b68;color:#e6d8c5}
+.hero-bottom{color:#514a40}
+.manifesto-strip{background:#28251f;color:#e7ddce;border-color:#5a4f40}
+.manifesto-strip i{color:#b18a64}
+.model-editorial{background:#211f1a;color:#eee7dc;position:relative}
+.model-editorial:before{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(115deg,rgba(185,158,126,.10),transparent 40%,rgba(0,0,0,.22))}
+.model-editorial-heading,.model-editorial-grid,.model-editorial-note{position:relative}
+.model-editorial-heading h2{font-size:clamp(72px,9vw,128px)}
+.model-portrait{background:#4a4135;border:1px solid rgba(181,150,112,.42);padding:7px}
+.model-portrait img{object-fit:cover;filter:none!important}
+.model-portrait figcaption{color:#d4c4ad}
+.archive-section{position:relative;background:linear-gradient(180deg,rgba(206,196,180,.96),rgba(226,218,205,.97) 44%,rgba(195,184,166,.97))!important}
+.archive-section:before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.19;background-image:url('/images/campaign-backdrop-limestone.jpg');background-size:cover;background-position:center}
+.archive-section>*{position:relative}
+.archive-section .section-heading h2{font-size:clamp(66px,8.5vw,116px)}
+.archive-toolbar{display:block;border-top:1px solid rgba(51,42,31,.34);padding:22px 0 28px}
+.archive-toolbar>p{margin:0 0 20px;letter-spacing:.22em;color:#5f564a}
+.filters{gap:8px 20px}
+.filter-button{border:0;border-bottom:1px solid transparent;border-radius:0;background:transparent;padding:10px 2px;color:#62594d;font-size:8px;letter-spacing:.18em}
+.filter-button.active,.filter-button:hover{background:transparent;border-color:#28241f;color:#211e19}
+.product-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:68px 28px;align-items:start}
+.product-card{position:relative}
+.product-card:nth-child(5n+2),.product-card:nth-child(5n+4){margin-top:48px}
+.product-image-wrap{aspect-ratio:4/5!important;position:relative;isolation:isolate;display:grid;place-items:center;overflow:hidden;border:1px solid rgba(66,53,38,.25)!important;box-shadow:0 20px 40px rgba(44,34,24,.13),inset 0 0 0 8px rgba(238,229,214,.20)!important}
+.product-image-wrap:before{content:"";position:absolute;inset:9px;border:1px solid rgba(255,249,238,.26);z-index:0;pointer-events:none}
+.product-image-wrap:after{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;background:linear-gradient(145deg,rgba(255,255,255,.18),transparent 36%,rgba(33,27,20,.13))}
+.product-image-wrap img{width:100%;height:100%;padding:10%!important;object-fit:contain!important;position:relative;z-index:1;filter:drop-shadow(0 17px 14px rgba(27,22,16,.19))!important;transition:transform .9s cubic-bezier(.2,.7,.2,1),filter .7s}
+.product-card:nth-child(6n+1) .product-image-wrap{background:linear-gradient(90deg,rgba(91,74,53,.10) 1px,transparent 1px),linear-gradient(180deg,#d8cdbb,#b9aa96)!important;background-size:42px 42px,auto!important}
+.product-card:nth-child(6n+2) .product-image-wrap{background:radial-gradient(ellipse at 50% 20%,#e8dfd0,#c5b6a2 70%,#958875)!important}
+.product-card:nth-child(6n+3) .product-image-wrap{background:linear-gradient(135deg,#bcb9ad,#e3dbce 48%,#aaa18f)!important}
+.product-card:nth-child(6n+4) .product-image-wrap{background:repeating-linear-gradient(0deg,rgba(68,55,40,.045) 0 1px,transparent 1px 5px),linear-gradient(135deg,#e4d9c7,#b8a58d)!important}
+.product-card:nth-child(6n+5) .product-image-wrap{background:radial-gradient(ellipse at 48% 24%,#dddcd1,#aeb0a3 72%,#85897d)!important}
+.product-card:nth-child(6n) .product-image-wrap{background:linear-gradient(145deg,#d6c9b6,#9d8f7c)!important}
+.product-card:hover .product-image-wrap img{transform:scale(1.035);filter:drop-shadow(0 22px 18px rgba(27,22,16,.24))!important}
+.product-number{left:16px;top:16px;background:rgba(238,230,216,.91);color:#29241e;border:1px solid rgba(67,52,36,.22);font-size:8px;letter-spacing:.18em}
+.product-info{padding:16px 2px 0;border-top:1px solid rgba(53,43,31,.28);margin-top:13px}
+.product-info h3{font-size:clamp(20px,2vw,27px);color:#26221c}
+.product-info p{font-size:10px;line-height:1.65;color:#5e564b}
+.product-category{color:#806347;letter-spacing:.17em}
+.archive-footnote{border-color:rgba(53,43,31,.28);color:#62594d}
+.campaign-band{grid-template-columns:1.08fr .92fr;background:#25231e;color:#eee6d8;border-top:1px solid #78664f;border-bottom:1px solid #78664f}
+.campaign-image{position:relative;min-height:650px;background-image:url('/images/campaign-backdrop-limestone.jpg');background-size:cover;background-position:center;padding:28px}
+.campaign-image img{object-fit:contain!important;box-shadow:0 26px 55px rgba(0,0,0,.25);border:8px solid rgba(233,224,209,.9);background:#c4b8a6}
+.campaign-image-index,.campaign-image-caption{z-index:1}
+.campaign-image-index{background:rgba(35,31,25,.72);padding:8px 11px}
+.campaign-image-caption{left:45px;bottom:44px}
+.campaign-copy{padding:clamp(48px,7vw,100px) 9%}
+.campaign-copy h2{font-size:clamp(64px,7vw,100px)}
+.campaign-copy>p:not(.eyebrow){color:#c6bbaa}
+.campaign-copy .eyebrow{color:#b99870}
+.campaign-copy .text-link{border-color:#84745e;color:#e4d8c6}
+.campaign-credits{border-color:#62594d;color:#c4b59f}
+.canvas-section{position:relative;isolation:isolate;background:#bdb4a6!important;overflow:hidden}
+.canvas-section:before{content:"";position:absolute;inset:0;z-index:-1;background-image:linear-gradient(90deg,rgba(44,36,27,.13) 1px,transparent 1px),url('/images/campaign-backdrop-limestone.jpg');background-size:calc(33.333% + 1px) 100%,cover;background-position:center;opacity:.8}
+.canvas-section .section-heading{color:#27231d}
+.canvas-section .section-heading .eyebrow{color:#795b40}
+.canvas-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:76px 7vw;align-items:start}
+.canvas-card{position:relative;padding:clamp(12px,2vw,24px)!important;background:linear-gradient(145deg,#e4ddcf,#c6bba9)!important;border:1px solid rgba(62,49,34,.34)!important;box-shadow:0 30px 55px rgba(37,29,20,.23),inset 0 0 0 7px rgba(246,239,226,.34)!important}
+.canvas-card:nth-child(4n+2){margin-top:90px}
+.canvas-card:nth-child(4n+3){margin-top:-24px}
+.canvas-card:before{content:"";position:absolute;inset:9px;border:1px solid rgba(87,67,44,.22);pointer-events:none;z-index:2}
+.canvas-card img{position:relative;aspect-ratio:4/3!important;width:100%;object-fit:contain!important;padding:5%!important;background:radial-gradient(ellipse at 50% 35%,#e9e0d2,#b9aa96)!important;box-shadow:0 15px 25px rgba(36,28,20,.19)}
+.canvas-card p{font-size:clamp(21px,2.2vw,30px);padding:12px 5px 0;color:#28231d}
+.canvas-card span{padding:0 5px;color:#6f6251;letter-spacing:.16em}
+.philosophy{background:radial-gradient(ellipse at 80% 0%,#4b4032,#201e19 58%);color:#eae1d3}
+.philosophy h2 em{color:#b79670}
+.commission-section{background:linear-gradient(120deg,#bdb09d,#d8cbbb 50%,#b8aa96)}
+.site-footer{background:#201e19}
+.modal-content{background:#dcd3c5;border:1px solid rgba(191,163,127,.35);box-shadow:0 35px 100px rgba(0,0,0,.36)}
+.modal-content img{background-image:url('/images/campaign-backdrop-limestone.jpg');background-size:cover}
+@media(min-width:1500px){.hero{padding-left:max(5.5vw,calc((100vw - 1640px)/2));padding-right:max(5.5vw,calc((100vw - 1640px)/2))}.section{padding-left:max(7vw,calc((100vw - 1540px)/2));padding-right:max(7vw,calc((100vw - 1540px)/2))}.product-grid{gap:82px 36px}}
+@media(max-width:900px){.hero{min-height:0;grid-template-columns:1fr;gap:4vw;padding-top:60px}.hero-visual{height:480px;min-height:430px}.product-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:48px 20px}.product-card:nth-child(5n+2),.product-card:nth-child(5n+4){margin-top:28px}.canvas-grid{gap:48px 4vw}.canvas-card:nth-child(4n+2){margin-top:55px}}
+@media(max-width:650px){body{background-attachment:scroll}.hero{display:flex;flex-direction:column;align-items:stretch;padding:42px 5vw 76px;gap:22px;background:linear-gradient(180deg,rgba(220,212,199,.97),rgba(205,195,180,.88))}.hero-copy{padding:0}.hero-kicker{margin-top:26px;font-size:8px;letter-spacing:.22em}.hero h1{font-size:clamp(72px,19vw,106px)}.hero-visual{height:clamp(420px,125vw,540px);min-height:0;width:100%}.hero-main-image{width:88%;height:88%;border-width:6px}.hero-stamp{width:64px;height:64px;font-size:20px;right:-8px;top:16px}.hero-bottom{bottom:17px;font-size:6px;letter-spacing:.13em}.model-editorial{padding:78px 5vw}.model-editorial-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.model-portrait img,.model-portrait.portrait-tall img{height:clamp(240px,72vw,390px)}.model-portrait.portrait-offset{margin-top:28px}.model-portrait figcaption{font-size:6px;flex-direction:column;line-height:1.6}.archive-section{padding:78px 5vw!important}.archive-section .section-heading h2{font-size:clamp(58px,15vw,82px)}.product-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:38px 12px}.product-card:nth-child(5n+2),.product-card:nth-child(5n+4){margin-top:22px}.product-image-wrap{aspect-ratio:4/5!important}.product-image-wrap img{padding:8%!important}.product-info{display:block;padding-top:12px}.product-info h3{font-size:18px}.product-category{display:block;padding-top:7px}.campaign-band{grid-template-columns:1fr}.campaign-image{min-height:0;height:430px;padding:18px}.campaign-image img{height:100%;object-fit:contain}.campaign-image-caption{left:30px;bottom:30px}.campaign-copy{padding:55px 7vw 65px}.canvas-section{padding:78px 5vw}.canvas-grid{grid-template-columns:1fr;gap:34px}.canvas-card:nth-child(4n+2),.canvas-card:nth-child(4n+3){margin:0}.canvas-card img{aspect-ratio:4/3!important}.canvas-card{max-width:520px;width:100%;margin-inline:auto}.philosophy{padding:76px 6vw}.commission-section{padding:76px 7vw}}
+@media(min-width:651px) and (max-width:800px){.hero{grid-template-columns:1fr 1fr}.hero-visual{height:470px}.product-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}

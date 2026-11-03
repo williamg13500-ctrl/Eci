@@ -134,4 +134,5 @@ async function composeHeroBackdrop(){
  }catch(error){console.warn('ECI background composite unavailable; original campaign photograph retained.',error)}
 }
 const scheduleHeroComposite=()=>{const run=()=>{if('requestIdleCallback'in window)requestIdleCallback(()=>composeHeroBackdrop(),{timeout:3500});else setTimeout(composeHeroBackdrop,2200)};setTimeout(run,1800)};
-if(document.readyState==='complete')scheduleHeroComposite();else window.addEventListener('load',scheduleHeroComposite,{once:true});
+/* The original campaign photograph remains untouched. The recovered limestone image is used as the physical gallery surround in CSS; no unverified segmentation mask is applied. */
+// Background compositing is intentionally disabled until a verified subject mask is available.
