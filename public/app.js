@@ -86,7 +86,21 @@ $('.menu-toggle').addEventListener('click',()=>{const nav=$('.main-nav'),open=na
 $('.main-nav').querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{$('.main-nav').classList.remove('open');$('.menu-toggle').setAttribute('aria-expanded','false')}));
 $('.modal-close').addEventListener('click',closeModal);
 $('#product-modal').addEventListener('click',e=>{if(e.target.id==='product-modal')closeModal()});
-campaignImages().forEach((img,index)=>{img.tabIndex=0;img.setAttribute('role','button');img.setAttribute('aria-label','Open campaign photograph '+(index+1));img.addEventListener('click',()=>openCampaign(index));img.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openCampaign(index)}})});
+const campaignSlides=campaignImages();
+const campaignGrid=$('.model-editorial-grid');
+if(campaignGrid&&campaignSlides.length){
+ campaignGrid.classList.add('campaign-carousel-track');
+ campaignSlides.forEach((img,index)=>{const figure=img.closest('figure');figure.classList.add('campaign-slide');figure.classList.toggle('is-active',index===0);img.tabIndex=0;img.setAttribute('role','button');img.setAttribute('aria-label','Open campaign photograph '+(index+1));img.addEventListener('click',()=>openCampaign(index));img.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openCampaign(index)}})});
+ const controls=document.createElement('div');controls.className='campaign-carousel-controls';controls.setAttribute('aria-label','Campaign photograph navigation');
+ controls.innerHTML='<button type="button" class="campaign-carousel-arrow" data-step="-1" aria-label="Previous photograph">←</button><div class="campaign-carousel-dots">'+campaignSlides.map((_,i)=>'<button type="button" class="campaign-dot '+(i===0?'is-active':'')+'" data-index="'+i+'" aria-label="Show campaign photograph '+(i+1)+'"></button>').join('')+'</div><button type="button" class="campaign-carousel-arrow" data-step="1" aria-label="Next photograph">→</button>';
+ campaignGrid.after(controls);
+ const activateCampaign=(next)=>{campaignIndex=(next+campaignSlides.length)%campaignSlides.length;campaignSlides.forEach((img,i)=>img.closest('figure').classList.toggle('is-active',i===campaignIndex));controls.querySelectorAll('.campaign-dot').forEach((dot,i)=>{dot.classList.toggle('is-active',i===campaignIndex);dot.setAttribute('aria-current',i===campaignIndex?'true':'false')})};
+ controls.querySelectorAll('[data-index]').forEach(dot=>dot.addEventListener('click',()=>{activateCampaign(Number(dot.dataset.index));restartCampaignTimer()}));
+ controls.querySelectorAll('[data-step]').forEach(btn=>btn.addEventListener('click',()=>{activateCampaign(campaignIndex+Number(btn.dataset.step));restartCampaignTimer()}));
+ let campaignTimer=setInterval(()=>{if(!document.hidden&&!$('#campaign-lightbox').classList.contains('open'))activateCampaign(campaignIndex+1)},5200);
+ function restartCampaignTimer(){clearInterval(campaignTimer);campaignTimer=setInterval(()=>{if(!document.hidden&&!$('#campaign-lightbox').classList.contains('open'))activateCampaign(campaignIndex+1)},5200)}
+ const reduceMotion=window.matchMedia('(prefers-reduced-motion: reduce)');if(reduceMotion.matches)clearInterval(campaignTimer);
+}
 $('#campaign-close').addEventListener('click',closeCampaign);
 $('#campaign-prev').addEventListener('click',()=>showCampaignImage(campaignIndex-1));
 $('#campaign-next').addEventListener('click',()=>showCampaignImage(campaignIndex+1));

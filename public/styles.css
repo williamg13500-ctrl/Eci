@@ -277,6 +277,20 @@ body{background-color:#17110f;color:#e9dfd0}
 .model-portrait figcaption{padding:13px 5px 5px;color:#e5d2b7}
 .model-portrait figcaption span:last-child{color:#b99a76}
 .model-portrait.portrait-offset{margin-top:54px}
+/* Auto-advancing editorial campaign carousel */
+.model-editorial-grid.campaign-carousel-track{display:block;position:relative;max-width:980px;margin:0 auto;min-height:clamp(420px,66vw,760px)}
+.campaign-slide{display:none!important;margin:0!important;width:100%;padding:12px;background:linear-gradient(145deg,rgba(209,171,124,.7),rgba(65,38,34,.5) 42%,rgba(12,10,10,.8));animation:campaignFade .8s ease both}
+.campaign-slide.is-active{display:block!important}
+.campaign-slide img,.campaign-slide.portrait-tall img{width:100%;height:clamp(420px,66vw,760px)!important;object-fit:contain!important;background:#171412;cursor:zoom-in}
+.campaign-slide figcaption{padding:16px 10px 8px;font-size:8px}
+.campaign-carousel-controls{display:flex;align-items:center;justify-content:center;gap:28px;position:relative;margin:22px auto 0}
+.campaign-carousel-arrow{width:42px;height:42px;border:1px solid rgba(211,177,133,.48);background:transparent;color:#e9d8c2;font-size:20px;cursor:pointer;transition:background .2s}
+.campaign-carousel-arrow:hover{background:#70523a}
+.campaign-carousel-dots{display:flex;align-items:center;gap:10px}
+.campaign-dot{width:7px;height:7px;border:0;border-radius:50%;padding:0;background:#796b5a;cursor:pointer}
+.campaign-dot.is-active{width:24px;border-radius:8px;background:#d0a477}
+@keyframes campaignFade{from{opacity:.25;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:650px){.model-editorial-grid.campaign-carousel-track{min-height:0}.campaign-slide img,.campaign-slide.portrait-tall img{height:clamp(360px,118vw,620px)!important}.campaign-carousel-controls{margin-top:18px;gap:18px}}
 .model-editorial-grid{gap:clamp(18px,2.5vw,38px)}
 .campaign-band{background:radial-gradient(ellipse at 18% 40%,rgba(119,67,52,.4),transparent 40%),linear-gradient(120deg,#1a1111,#3a2023 58%,#17110f);color:#eee2d1;border-top:1px solid rgba(204,165,119,.28);border-bottom:1px solid rgba(204,165,119,.28)}
 .campaign-image{background:radial-gradient(ellipse at 50% 35%,#8d694b,#3a2523 62%,#160f10);border-right:1px solid rgba(209,174,131,.24)}
