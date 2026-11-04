@@ -1,0 +1,5 @@
+# Hatchable project manifest. This file marks the folder as a
+# Hatchable project and declares the services it uses.
+# Reference: https://hatchable.com/docs/developers/config
+name = "Edmond Clinton Inc. — Luxury Wearable Art"
+description = "Luxury editorial website and living archive for Edmond Clinton Inc., preserving the original one-of-one reworked garments, bags, and canvas artworks."
