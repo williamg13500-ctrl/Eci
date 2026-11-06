@@ -1,0 +1,118 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --font-display: "Cormorant Garamond", "Times New Roman", serif;
+  --font-sans: "Archivo", ui-sans-serif, system-ui, sans-serif;
+  --radius-sm: calc(var(--radius) - 1px);
+  --radius-md: var(--radius);
+  --radius-lg: var(--radius);
+  --radius-xl: var(--radius);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-bone: var(--bone);
+  --color-bone-dim: var(--bone-dim);
+  --color-brass: var(--brass);
+  --color-oxblood: var(--oxblood);
+  --color-rule: var(--rule);
+  --color-rule-dark: var(--rule-dark);
+  --color-limestone: var(--limestone);
+  --color-limestone-deep: var(--limestone-deep);
+  --shadow-frame: var(--shadow-frame-v);
+  --shadow-object: var(--shadow-object-v);
+}
+
+:root {
+  --radius: 2px;
+  --ink: oklch(0.17 0.006 60);
+  --ink-soft: oklch(0.23 0.008 60);
+  --bone: oklch(0.95 0.014 85);
+  --bone-dim: oklch(0.78 0.018 80);
+  --brass: oklch(0.72 0.08 78);
+  --oxblood: oklch(0.42 0.11 25);
+  --rule: oklch(0.17 0.006 60 / 14%);
+  --rule-dark: oklch(0.95 0.014 85 / 16%);
+  --limestone: oklch(0.9 0.02 78);
+  --limestone-deep: oklch(0.84 0.025 74);
+  --shadow-frame-v: 0 1px 0 oklch(1 0 0 / 60%) inset, 0 30px 60px -30px oklch(0.17 0.006 60 / 45%), 0 8px 18px -10px oklch(0.17 0.006 60 / 30%);
+  --shadow-object-v: 0 24px 40px -24px oklch(0.17 0.006 60 / 55%);
+
+  --background: var(--bone);
+  --foreground: var(--ink);
+  --card: oklch(0.92 0.016 82);
+  --card-foreground: var(--ink);
+  --popover: var(--bone);
+  --popover-foreground: var(--ink);
+  --primary: var(--ink);
+  --primary-foreground: var(--bone);
+  --secondary: oklch(0.9 0.018 82);
+  --secondary-foreground: var(--ink);
+  --muted: oklch(0.9 0.018 82);
+  --muted-foreground: oklch(0.42 0.012 60);
+  --accent: var(--brass);
+  --accent-foreground: var(--ink);
+  --destructive: var(--oxblood);
+  --destructive-foreground: var(--bone);
+  --border: var(--rule);
+  --input: oklch(0.17 0.006 60 / 30%);
+  --ring: var(--oxblood);
+}
+
+@layer base {
+  * { border-color: var(--color-border); }
+  html { scroll-behavior: smooth; scroll-padding-top: 5rem; }
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+  :focus-visible { outline: 2px solid var(--brass); outline-offset: 3px; }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+}
+
+@utility font-display { font-family: var(--font-display); }
+@utility gallery-wall {
+  background: radial-gradient(120% 80% at 50% 0%, var(--limestone) 0%, var(--limestone-deep) 100%);
+}
+@utility eyebrow {
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+}
+
+.reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.9s ease, transform 0.9s ease; }
+.reveal.is-in { opacity: 1; transform: none; }
+
+@keyframes marquee { to { transform: translateX(-50%); } }
+.marquee-track { animation: marquee 40s linear infinite; }
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; }
+  .marquee-track { animation: none; }
+}
