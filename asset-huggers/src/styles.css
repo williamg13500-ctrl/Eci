@@ -38,10 +38,6 @@
   --color-oxblood: var(--oxblood);
   --color-rule: var(--rule);
   --color-rule-dark: var(--rule-dark);
-  --color-limestone: var(--limestone);
-  --color-limestone-deep: var(--limestone-deep);
-  --shadow-frame: var(--shadow-frame-v);
-  --shadow-object: var(--shadow-object-v);
 }
 
 :root {
@@ -54,10 +50,6 @@
   --oxblood: oklch(0.42 0.11 25);
   --rule: oklch(0.17 0.006 60 / 14%);
   --rule-dark: oklch(0.95 0.014 85 / 16%);
-  --limestone: oklch(0.9 0.02 78);
-  --limestone-deep: oklch(0.84 0.025 74);
-  --shadow-frame-v: 0 1px 0 oklch(1 0 0 / 60%) inset, 0 30px 60px -30px oklch(0.17 0.006 60 / 45%), 0 8px 18px -10px oklch(0.17 0.006 60 / 30%);
-  --shadow-object-v: 0 24px 40px -24px oklch(0.17 0.006 60 / 55%);
 
   --background: var(--bone);
   --foreground: var(--ink);
@@ -97,9 +89,6 @@
 }
 
 @utility font-display { font-family: var(--font-display); }
-@utility gallery-wall {
-  background: radial-gradient(120% 80% at 50% 0%, var(--limestone) 0%, var(--limestone-deep) 100%);
-}
 @utility eyebrow {
   font-family: var(--font-sans);
   font-size: 0.6875rem;
