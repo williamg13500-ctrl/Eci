@@ -1,9 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useCallback, useEffect, useMemo, useRef, useState, type FormEvent } from "react";
-import { CANVASES, CATEGORIES, HEROES, PIECES } from "@/data/catalog";
-import { filterPieces, type Filter } from "@/lib/archive";
-
-type ViewItem = { key: string; title: string; label: string; note: string; src: string; alt: string };
+import { CANVASES, CATEGORIES, HEROES, PIECES, type Category } from "@/data/catalog";
 
 const WHATSAPP = "27736453141";
 const EMAIL = "bulkchaser664@gmail.com";
@@ -31,7 +28,6 @@ export const Route = createFileRoute("/")({
 });
 
 const NAV = [
-  { href: "#campaign", label: "Campaign" },
   { href: "#archive", label: "Archive" },
   { href: "#canvases", label: "Canvases" },
   { href: "#philosophy", label: "Philosophy" },
@@ -68,7 +64,6 @@ function Index() {
         <Hero />
         <Marquee />
         <Philosophy />
-        <Campaign />
         <Archive />
         <CanvasRoom />
         <Stats />
@@ -275,79 +270,12 @@ function Philosophy() {
   );
 }
 
-function Campaign() {
-  const [active, setActive] = useState<number | null>(null);
-  const items: ViewItem[] = HEROES.map((src, k) => ({
-    key: src,
-    src,
-    title: `Campaign Portrait ${String(k + 1).padStart(2, "0")}`,
-    label: "ECI Campaign — Cape Town",
-    note: "Edmond Clinton Inc. one-of-one pieces, photographed on location in Cape Town.",
-    alt: `Edmond Clinton Inc. campaign portrait ${k + 1}`,
-  }));
-  return (
-    <section id="campaign" className="gallery-wall pt-28 md:pt-40">
-      <div className="mx-auto max-w-[1440px] px-5 md:px-10">
-        <div className="reveal grid gap-10 md:grid-cols-12 md:items-end">
-          <div className="md:col-span-7">
-            <SectionLabel n="02">The Campaign</SectionLabel>
-            <h2 className="mt-8 font-display text-[clamp(3rem,7vw,6.5rem)] leading-[0.9] tracking-tight">
-              Worn on the <span className="italic text-oxblood">street</span>
-            </h2>
-          </div>
-          <p className="max-w-md text-[15px] leading-relaxed text-muted-foreground md:col-span-5">
-            The archive leaves the studio. Four portraits of ECI pieces in the city that made them — wearable sculpture,
-            carrying its own history into new stories.
-          </p>
-        </div>
-        <ul className="mt-20 grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-8">
-          {items.map((it, k) => (
-            <li key={it.key} className={`reveal ${k % 2 ? "md:mt-16" : ""}`}>
-              <button type="button" onClick={() => setActive(k)} aria-label={`View ${it.title}`} className="group block w-full text-left">
-                <div className="bg-bone p-2 shadow-frame md:p-3">
-                  <div className="aspect-[3/4] overflow-hidden bg-ink-soft">
-                    <img src={it.src} alt={it.alt} loading="lazy" decoding="async" className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]" />
-                  </div>
-                </div>
-                <p className="eyebrow mt-4 text-muted-foreground">Portrait {String(k + 1).padStart(2, "0")}</p>
-              </button>
-            </li>
-          ))}
-        </ul>
-      </div>
-      <div className="reveal mt-24 border-y border-rule bg-ink text-bone">
-        <div className="mx-auto grid max-w-[1440px] gap-8 px-5 py-14 md:grid-cols-12 md:items-center md:px-10">
-          <p className="font-display text-[clamp(2rem,4vw,3.5rem)] italic leading-[1] md:col-span-7">
-            “Wear the history. <span className="text-brass">Make new stories.</span>”
-          </p>
-          <dl className="grid grid-cols-2 gap-6 md:col-span-5">
-            <div><dt className="eyebrow text-bone/50">Studio</dt><dd className="mt-2 text-sm">Edmond Clinton Inc.</dd></div>
-            <div><dt className="eyebrow text-bone/50">Location</dt><dd className="mt-2 text-sm">Cape Town</dd></div>
-            <div><dt className="eyebrow text-bone/50">Artist</dt><dd className="mt-2 text-sm">Edmond Clinton</dd></div>
-            <div><dt className="eyebrow text-bone/50">Follow</dt><dd className="mt-2 text-sm"><a className="hover:text-brass" href={INSTAGRAM} target="_blank" rel="noopener noreferrer">@Bulkchaser1212</a></dd></div>
-          </dl>
-        </div>
-      </div>
-      {active !== null && <Lightbox items={items} index={active} onIndex={setActive} onClose={() => setActive(null)} />}
-    </section>
-  );
-}
-
-const pieceView = (p: (typeof PIECES)[number]): ViewItem => ({
-  key: p.id, title: p.title, label: `${p.id} — ${p.category}`, note: p.note, src: p.src, alt: p.title,
-});
+type Filter = "All" | Category;
 
 function Archive() {
   const [filter, setFilter] = useState<Filter>("All");
-  const [query, setQuery] = useState("");
   const [active, setActive] = useState<number | null>(null);
-  const list = useMemo(() => filterPieces(PIECES, filter, query), [filter, query]);
-  const views = useMemo(() => list.map(pieceView), [list]);
-  const discover = () => {
-    setFilter("All");
-    setQuery("");
-    setActive(Math.floor(Math.random() * PIECES.length));
-  };
+  const list = useMemo(() => (filter === "All" ? PIECES : PIECES.filter((p) => p.category === filter)), [filter]);
   const counts = useMemo(() => {
     const c: Record<string, number> = { All: PIECES.length };
     CATEGORIES.forEach((k) => (c[k] = PIECES.filter((p) => p.category === k).length));
@@ -360,7 +288,7 @@ function Archive() {
       <div className="mx-auto max-w-[1440px] px-5 md:px-10">
         <div className="reveal grid gap-10 md:grid-cols-12 md:items-end">
           <div className="md:col-span-7">
-            <SectionLabel n="03" dark>
+            <SectionLabel n="02" dark>
               The Archive
             </SectionLabel>
             <h2 className="mt-8 font-display text-[clamp(3rem,7vw,6.5rem)] leading-[0.9] tracking-tight">
@@ -392,24 +320,6 @@ function Archive() {
             Showing {list.length} of {PIECES.length}
           </p>
         </div>
-        <div className="mt-6 flex flex-wrap items-center gap-4">
-          <label htmlFor="archive-search" className="sr-only">Search the archive</label>
-          <input
-            id="archive-search"
-            type="search"
-            value={query}
-            maxLength={80}
-            onChange={(e) => setQuery(e.target.value)}
-            placeholder="Search by title, note, category or ECI code…"
-            className="min-w-0 flex-1 border-0 border-b border-rule-dark bg-transparent px-0 py-3 text-base text-bone placeholder:text-bone/35 focus:border-brass focus:outline-none"
-          />
-          <button type="button" onClick={discover} className="eyebrow border border-brass px-5 py-3 text-brass transition-colors hover:bg-brass hover:text-ink">
-            Discover a piece ✦
-          </button>
-        </div>
-        {list.length === 0 && (
-          <p className="mt-12 font-display text-2xl italic text-bone/60">No pieces match “{query}”.</p>
-        )}
 
         <ul className="mt-12 grid grid-cols-2 gap-x-4 gap-y-12 md:grid-cols-3 md:gap-x-8 lg:grid-cols-4">
           {list.map((p, idx) => (
@@ -420,7 +330,7 @@ function Archive() {
                 className="group block w-full text-left"
                 aria-label={`View ${p.title}, ${p.id}`}
               >
-                <div className="gallery-wall relative aspect-[4/5] overflow-hidden p-4 md:p-6">
+                <div className="relative aspect-[4/5] overflow-hidden bg-ink-soft">
                   <img
                     src={p.src}
                     alt={p.title}
@@ -428,9 +338,9 @@ function Archive() {
                     decoding="async"
                     width={800}
                     height={1000}
-                    className="h-full w-full object-contain drop-shadow-[var(--shadow-object-v)] transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                    className="h-full w-full object-contain transition-transform duration-700 ease-out group-hover:scale-[1.03]"
                   />
-                  <span className="eyebrow absolute left-3 top-3 text-ink/60">{p.category}</span>
+                  <span className="eyebrow absolute left-3 top-3 text-bone/70">{p.category}</span>
                 </div>
                 <div className="mt-4 flex items-start justify-between gap-3 border-t border-rule-dark pt-3">
                   <div>
@@ -444,7 +354,7 @@ function Archive() {
           ))}
         </ul>
       </div>
-      {active !== null && views[active] && <Lightbox items={views} index={active} onIndex={setActive} onClose={() => setActive(null)} />}
+      {active !== null && <Lightbox items={list} index={active} onIndex={setActive} onClose={() => setActive(null)} />}
     </section>
   );
 }
@@ -455,12 +365,12 @@ function Lightbox({
   onIndex,
   onClose,
 }: {
-  items: ViewItem[];
+  items: typeof PIECES;
   index: number;
   onIndex: (i: number) => void;
   onClose: () => void;
 }) {
-  const p = items[index] ?? items[0]!;
+  const p = items[index];
   const closeRef = useRef<HTMLButtonElement>(null);
   const prev = useCallback(() => onIndex((index - 1 + items.length) % items.length), [index, items.length, onIndex]);
   const next = useCallback(() => onIndex((index + 1) % items.length), [index, items.length, onIndex]);
@@ -481,7 +391,7 @@ function Lightbox({
       if (e.key === "Tab") {
         const f = document.querySelectorAll<HTMLElement>("#lightbox button");
         if (!f.length) return;
-        const first = f[0]!, lastEl = f[f.length - 1]!;
+        const first = f[0], lastEl = f[f.length - 1];
         if (e.shiftKey && document.activeElement === first) { e.preventDefault(); lastEl.focus(); }
         else if (!e.shiftKey && document.activeElement === lastEl) { e.preventDefault(); first.focus(); }
       }
@@ -495,8 +405,8 @@ function Lightbox({
       id="lightbox"
       role="dialog"
       aria-modal="true"
-      aria-label={`${p.title}, ${p.label}`}
-      className="fixed inset-0 z-[70] flex flex-col bg-ink text-bone animate-in fade-in duration-300"
+      aria-label={`${p.title}, ${p.id}`}
+      className="fixed inset-0 z-[70] flex flex-col bg-ink/97 text-bone animate-in fade-in duration-300"
       onClick={(e) => e.target === e.currentTarget && onClose()}
     >
       <div className="flex items-center justify-between px-5 py-4 md:px-10">
@@ -508,11 +418,13 @@ function Lightbox({
         </button>
       </div>
       <div className="grid min-h-0 flex-1 grid-cols-1 gap-6 px-5 pb-6 md:grid-cols-12 md:px-10 md:pb-10" onClick={(e) => e.target === e.currentTarget && onClose()}>
-        <div className="gallery-wall relative min-h-0 p-4 md:col-span-8 md:p-8">
-          <img src={p.src} alt={p.alt} className="h-full max-h-[62svh] w-full object-contain drop-shadow-[var(--shadow-object-v)] md:max-h-none" />
+        <div className="relative min-h-0 md:col-span-8">
+          <img src={p.src} alt={p.title} className="h-full max-h-[70svh] w-full object-contain md:max-h-none" />
         </div>
         <div className="flex flex-col justify-end md:col-span-4 md:pb-4">
-          <p className="eyebrow text-brass">{p.label}</p>
+          <p className="eyebrow text-brass">
+            {p.id} — {p.category}
+          </p>
           <h3 className="mt-4 font-display text-4xl leading-tight md:text-5xl">{p.title}</h3>
           <p className="mt-4 text-[15px] leading-relaxed text-bone/70">{p.note}</p>
           <p className="mt-6 text-xs text-bone/50">One of one. Commission enquiries via the intake below.</p>
@@ -531,17 +443,11 @@ function Lightbox({
 }
 
 function CanvasRoom() {
-  const [active, setActive] = useState<number | null>(null);
-  const items: ViewItem[] = CANVASES.map((c) => ({
-    key: c.code, title: c.title, label: `${c.code} — Original canvas`, src: c.src,
-    note: "Original painting by Edmond Clinton.", alt: `${c.title} — original painting by Edmond Clinton`,
-  }));
   return (
-    <section id="canvases" className="gallery-wall">
-    <div className="mx-auto max-w-[1440px] px-5 py-28 md:px-10 md:py-40">
+    <section id="canvases" className="mx-auto max-w-[1440px] px-5 py-28 md:px-10 md:py-40">
       <div className="reveal grid gap-10 md:grid-cols-12 md:items-end">
         <div className="md:col-span-7">
-          <SectionLabel n="04">Before the Garment</SectionLabel>
+          <SectionLabel n="03">Before the Garment</SectionLabel>
           <h2 className="mt-8 font-display text-[clamp(3rem,7vw,6.5rem)] leading-[0.9] tracking-tight">
             The Canvas <span className="italic text-oxblood">Room</span>
           </h2>
@@ -560,15 +466,15 @@ function CanvasRoom() {
             }`}
           >
             <figure>
-              <button type="button" onClick={() => setActive(k)} aria-label={`View ${c.title}, ${c.code}`} className="group block w-full border-[10px] border-ink bg-bone p-3 shadow-frame md:p-6">
+              <div className="bg-card p-3 md:p-5">
                 <img
                   src={c.src}
                   alt={`${c.title} — original painting by Edmond Clinton`}
                   loading="lazy"
                   decoding="async"
-                  className="mx-auto max-h-[80svh] w-full object-contain transition-transform duration-700 group-hover:scale-[1.01]"
+                  className="mx-auto max-h-[80svh] w-full object-contain"
                 />
-              </button>
+              </div>
               <figcaption className="mt-4 flex items-baseline justify-between border-t border-rule pt-3">
                 <span className="font-display text-2xl italic">{c.title}</span>
                 <span className="eyebrow text-muted-foreground">{c.code}</span>
@@ -577,8 +483,6 @@ function CanvasRoom() {
           </li>
         ))}
       </ul>
-    </div>
-      {active !== null && <Lightbox items={items} index={active} onIndex={setActive} onClose={() => setActive(null)} />}
     </section>
   );
 }
@@ -685,7 +589,7 @@ function Commission() {
     <section id="commission" className="bg-ink py-28 text-bone md:py-40">
       <div className="mx-auto grid max-w-[1440px] gap-16 px-5 md:grid-cols-12 md:px-10">
         <div className="reveal md:col-span-5">
-          <SectionLabel n="05" dark>
+          <SectionLabel n="04" dark>
             Commission Intake
           </SectionLabel>
           <h2 className="mt-8 font-display text-[clamp(3rem,6vw,5.5rem)] leading-[0.92] tracking-tight">
