@@ -4,7 +4,7 @@ Source of truth: Lovable project snapshot `42a14a095d0f1fccad3c3ebc72fda332110e3
 
 - Lovable editor: https://lovable.dev/projects/8ca3a290-bb83-4066-875f-420d72da0e14
 - Lovable preview: https://id-preview--8ca3a290-bb83-4066-875f-420d72da0e14.lovable.app
-- Hatchable edition: https://asset-huggers.hatchable.site
+- Hatchable edition: https://asset-huggers.hatchable.site (deployment v2, 2026-11-06)
 
 ## Project boundaries
 
